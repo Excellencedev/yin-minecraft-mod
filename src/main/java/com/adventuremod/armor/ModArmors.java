@@ -47,11 +47,11 @@ public class ModArmors {
     public static final Item DEER_HIDE_BOOTS = registerArmorItem("deer_hide_boots", DEER_HIDE_MATERIAL, ArmorItem.Type.BOOTS);
 
     private static RegistryEntry<ArmorMaterial> registerArmorMaterial(String name, Map<ArmorItem.Type, Integer> defense,
-                                                                      int enchantability, net.minecraft.sound.SoundEvent equipSound,
+                                                                      int enchantability, RegistryEntry<net.minecraft.sound.SoundEvent> equipSound,
                                                                       float toughness, float knockbackResistance,
                                                                       Supplier<Ingredient> repairIngredient) {
         Identifier id = Identifier.of(AdventureMod.MOD_ID, name);
-        ArmorMaterial material = new ArmorMaterial(defense, enchantability, RegistryEntry.of(equipSound), repairIngredient, List.of(), toughness, knockbackResistance);
+        ArmorMaterial material = new ArmorMaterial(defense, enchantability, equipSound, repairIngredient, List.of(), toughness, knockbackResistance);
         return RegistryEntry.of(Registry.register(Registries.ARMOR_MATERIAL, id, material));
     }
 
