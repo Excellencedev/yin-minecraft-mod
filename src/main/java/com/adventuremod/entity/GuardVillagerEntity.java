@@ -1,5 +1,6 @@
 package com.adventuremod.entity;
 
+import com.adventuremod.ai.TrackOwnerTargetGoal;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;

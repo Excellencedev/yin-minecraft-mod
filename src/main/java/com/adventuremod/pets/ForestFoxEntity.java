@@ -1,5 +1,6 @@
 package com.adventuremod.pets;
 
+import com.adventuremod.ai.TrackOwnerTargetGoal;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;

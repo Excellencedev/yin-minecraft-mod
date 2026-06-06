@@ -1,9 +1,7 @@
 package com.adventuremod.mount;
 
-import com.adventuremod.item.ModItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Saddleable;
-import net.minecraft.entity.SaddledComponent;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -15,6 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -22,11 +22,10 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class RideableBoarEntity extends AnimalEntity implements Saddleable {
-    private final SaddledComponent saddledComponent;
+    private boolean saddled = false;
 
     public RideableBoarEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
-        this.saddledComponent = new SaddledComponent(this, this.dataTracker, 8, false);
     }
 
     @Override
@@ -48,26 +47,34 @@ public class RideableBoarEntity extends AnimalEntity implements Saddleable {
     }
 
     @Override
-    public boolean isSaddleable() {
+    public boolean canBeSaddled() {
         return this.isAlive() && !this.isBaby();
     }
 
     @Override
-    public void saddle(@Nullable ItemStack stack) {
-        this.saddledComponent.setSaddled(true);
+    public void saddle(ItemStack stack, @Nullable SoundCategory soundCategory) {
+        this.saddled = true;
+        if (soundCategory != null) {
+            this.playSound(SoundEvents.ENTITY_PIG_SADDLE, 0.5F, 1.0F);
+        }
     }
 
     @Override
     public boolean isSaddled() {
-        return this.saddledComponent.isSaddled();
+        return this.saddled;
+    }
+
+    @Override
+    public SoundEvent getSaddleSound() {
+        return SoundEvents.ENTITY_PIG_SADDLE;
     }
 
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
-        if (stack.isOf(Items.SADDLE) && this.isSaddleable() && !this.isSaddled()) {
+        if (stack.isOf(Items.SADDLE) && this.canBeSaddled() && !this.isSaddled()) {
             if (!player.getAbilities().creativeMode) stack.decrement(1);
-            this.saddle(stack);
+            this.saddle(stack, SoundCategory.PLAYERS);
             return ActionResult.SUCCESS;
         }
         if (this.isSaddled() && !this.hasPassengers() && !player.shouldCancelInteraction()) {
@@ -88,7 +95,6 @@ public class RideableBoarEntity extends AnimalEntity implements Saddleable {
                 this.setPitch(player.getPitch() * 0.5F);
                 this.bodyYaw = this.getYaw();
                 this.headYaw = this.bodyYaw;
-                float speed = (float) this.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED);
                 super.travel(new net.minecraft.entity.MovementInput(
                         player.getMovementInput().forward(),
                         player.getMovementInput().sideways(),
