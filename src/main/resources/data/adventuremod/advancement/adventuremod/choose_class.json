@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {
+      "id": "adventuremod:class_tome"
+    },
+    "title": {
+      "translate": "advancements.adventuremod.choose_class.title"
+    },
+    "description": {
+      "translate": "advancements.adventuremod.choose_class.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "adventuremod:adventuremod/root",
+  "criteria": {
+    "choose_class": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

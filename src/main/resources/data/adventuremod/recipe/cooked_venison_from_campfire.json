@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "adventuremod:raw_venison"
+  },
+  "result": {
+    "id": "adventuremod:cooked_venison"
+  },
+  "experience": 0.35,
+  "cookingtime": 600
+}

@@ -1,0 +1,31 @@
+{
+  "display": {
+    "icon": {
+      "id": "adventuremod:antler_greatsword"
+    },
+    "title": {
+      "translate": "advancements.adventuremod.get_greatsword.title"
+    },
+    "description": {
+      "translate": "advancements.adventuremod.get_greatsword.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "adventuremod:adventuremod/get_antler",
+  "criteria": {
+    "get_greatsword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "adventuremod:antler_greatsword"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

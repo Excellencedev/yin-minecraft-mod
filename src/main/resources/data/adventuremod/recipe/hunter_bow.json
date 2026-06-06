@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " SA",
+    "S A",
+    " SA"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "A": {
+      "item": "adventuremod:deer_antler"
+    }
+  },
+  "result": {
+    "id": "adventuremod:hunter_bow",
+    "count": 1
+  }
+}

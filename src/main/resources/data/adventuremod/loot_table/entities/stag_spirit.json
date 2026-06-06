@@ -1,0 +1,1 @@
+{"type":"minecraft:entity","pools":[{"rolls":1,"entries":[{"type":"minecraft:item","functions":[{"function":"minecraft:set_count","count":{"min":1,"max":3}}],"name":"adventuremod:deer_antler"}]},{"rolls":1,"entries":[{"type":"minecraft:item","name":"minecraft:ender_pearl"}],"conditions":[{"condition":"minecraft:random_chance","chance":0.5}]}]}

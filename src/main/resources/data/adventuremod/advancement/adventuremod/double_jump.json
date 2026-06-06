@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:feather"
+    },
+    "title": {
+      "translate": "advancements.adventuremod.double_jump.title"
+    },
+    "description": {
+      "translate": "advancements.adventuremod.double_jump.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "adventuremod:adventuremod/root",
+  "criteria": {
+    "double_jump": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

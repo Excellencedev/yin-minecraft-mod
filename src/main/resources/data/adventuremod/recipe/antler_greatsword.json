@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " A ",
+    " A ",
+    " S "
+  ],
+  "key": {
+    "A": {
+      "item": "adventuremod:deer_antler"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "adventuremod:antler_greatsword",
+    "count": 1
+  }
+}

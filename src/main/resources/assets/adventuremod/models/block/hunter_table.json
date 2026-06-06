@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "adventuremod:block/hunter_table",
+    "side": "adventuremod:block/hunter_table",
+    "top": "adventuremod:block/hunter_table_top"
+  }
+}

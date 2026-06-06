@@ -1,0 +1,27 @@
+{
+  "display": {
+    "icon": {
+      "id": "adventuremod:hunter_table"
+    },
+    "title": {
+      "translate": "advancements.adventuremod.trade_hunter.title"
+    },
+    "description": {
+      "translate": "advancements.adventuremod.trade_hunter.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "adventuremod:adventuremod/root",
+  "criteria": {
+    "trade": {
+      "trigger": "minecraft:villager_trade",
+      "conditions": {
+        "villager": {
+          "nbt": "{VillagerData:{profession:\"adventuremod:hunter\"}}"
+        }
+      }
+    }
+  }
+}

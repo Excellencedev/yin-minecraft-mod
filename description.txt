@@ -1,0 +1,63 @@
+🧩 MANIFEST MODULES (LOCKED LIST)
+
+🟢 FOUNDATION
+    
+Manifest Vanilla
+Manifest Remodels & Animations
+Manifest Movement
+
+⸻
+
+🔴 CORE GAMEPLAY
+    
+Manifest Combat (includes hand-to-hand + mob combat)
+Manifest Animals
+Manifest Hunting & Butchering
+
+⸻
+
+🟡 WORLD SYSTEMS
+    
+Manifest Villagers & Villages
+Manifest Biomes & Structures
+Manifest Farming
+Manifest Ranching
+
+⸻
+
+🔵 EQUIPMENT & TRAVEL
+    
+Manifest Weapons
+Manifest Armors
+Manifest Mounts
+
+⸻
+
+🟣 PROGRESSION
+    
+Manifest Skills
+Manifest RPG
+Manifest Survival
+
+⸻
+
+🟠 EXPANSION
+    
+Manifest Pets
+Manifest Mythics
+Manifest Bosses
+
+⸻
+
+⚙️ SYSTEM
+    
+Manifest Core
+
+⸻
+
+🎯 CORE YOU’RE FOCUSING ON RIGHT NOW
+    •    Movement
+    •    Combat (hand-to-hand + mobs)
+    •    Animals
+    •    Villagers
+    •    World (biomes + structures)
