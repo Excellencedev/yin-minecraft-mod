@@ -8,8 +8,7 @@
     "water_color": 4159204,
     "water_fog_color": 329011,
     "grass_color": 14059039,
-    "foliage_color": 14049819,
-    "ambient_sound": "minecraft:ambient.feather_fall"
+    "foliage_color": 14049819
   },
   "carvers": {
     "air": [
