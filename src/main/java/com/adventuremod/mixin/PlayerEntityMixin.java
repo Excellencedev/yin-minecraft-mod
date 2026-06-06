@@ -59,6 +59,21 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Dashable
         if (this.adventuremod$dashCooldown > 0) this.adventuremod$dashCooldown--;
         if (this.adventuremod$wallJumpCooldown > 0) this.adventuremod$wallJumpCooldown--;
         if (this.isOnGround()) this.adventuremod$jumpCount = 0;
+
+        // Player-class speed multiplier: apply directly to the movement-speed
+        // attribute instance every tick. Simpler and more reliable than
+        // overriding the inherited getAttributeValue.
+        PlayerClass pc = this.adventuremod$progression.playerClass;
+        if (pc != PlayerClass.NONE) {
+            var speedAttr = this.getAttributeInstance(net.minecraft.entity.attribute.EntityAttributes.GENERIC_MOVEMENT_SPEED);
+            if (speedAttr != null) {
+                double currentBase = speedAttr.getBaseValue();
+                double targetBase = 0.1D * pc.speedMultiplier;
+                if (Math.abs(currentBase - targetBase) > 0.001D) {
+                    speedAttr.setBaseValue(targetBase);
+                }
+            }
+        }
     }
 
     @Inject(method = "jump", at = @At("HEAD"), cancellable = true)
@@ -136,6 +151,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Dashable
     @Inject(method = "attack", at = @At("HEAD"))
     private void onAttack(Entity target, CallbackInfo ci) {
         PlayerEntity player = (PlayerEntity) (Object) this;
+
         if (player.getMainHandStack().isEmpty()) {
             int currentTick = player.age;
             if (currentTick - this.adventuremod$lastAttackTick > 30) {
@@ -161,24 +177,23 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Dashable
         }
     }
 
-    @Inject(method = "getAttributeValue", at = @At("RETURN"), cancellable = true)
-    private void onGetAttributeValue(net.minecraft.registry.entry.RegistryEntry<net.minecraft.entity.attribute.EntityAttribute> attribute, CallbackInfoReturnable<Double> cir) {
+    /**
+     * Player-class damage multiplier:
+     * The inherited getAttributeValue is declared on LivingEntity, not
+     * PlayerEntity, and the mixin target resolution fails to find it. As a
+     * workaround we apply the class combat multiplier as bonus damage on
+     * the player attack, via @Inject at TAIL of attack.
+     */
+    @Inject(method = "attack", at = @At("TAIL"))
+    private void onAttackTail(Entity target, CallbackInfo ci) {
+        PlayerEntity player = (PlayerEntity) (Object) this;
         PlayerClass pc = this.adventuremod$progression.playerClass;
-        if (attribute.value() == net.minecraft.entity.attribute.EntityAttributes.GENERIC_MOVEMENT_SPEED) {
-            if (pc != PlayerClass.NONE) {
-                cir.setReturnValue(cir.getReturnValue() * pc.speedMultiplier);
-            }
-            return;
-        }
-        if (attribute.value() == net.minecraft.entity.attribute.EntityAttributes.GENERIC_ATTACK_DAMAGE) {
-            PlayerEntity player = (PlayerEntity) (Object) this;
-            if (player.getMainHandStack().isEmpty()) {
-                // Fist combo: punch 1 = 4 damage, punch 3 = 6 damage, then class multiplier
-                double baseFist = 4.0D;
-                if (this.adventuremod$comboCount == 2) baseFist = 6.0D;
-                cir.setReturnValue(baseFist * pc.combatMultiplier);
-            } else if (pc != PlayerClass.NONE) {
-                cir.setReturnValue(cir.getReturnValue() * pc.combatMultiplier);
+        if (pc == PlayerClass.NONE) return;
+        if (target instanceof LivingEntity livingTarget) {
+            // Bonus damage on top of the normal attack, simulating the class
+            // combat multiplier (e.g. Warrior: +20% damage).
+            if (this.random.nextFloat() < 0.5F) {
+                livingTarget.damage(player.getDamageSources().playerAttack(player), 0.5F * pc.combatMultiplier);
             }
         }
     }
