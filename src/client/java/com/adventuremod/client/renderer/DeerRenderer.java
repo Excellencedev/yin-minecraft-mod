@@ -4,14 +4,18 @@ import com.adventuremod.AdventureMod;
 import com.adventuremod.entity.DeerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.GoatEntityModel;
-import net.minecraft.entity.passive.GoatEntity;
 import net.minecraft.util.Identifier;
 
-public class DeerRenderer extends MobEntityRenderer<DeerEntity, GoatEntityModel<GoatEntity>> {
+public class DeerRenderer extends MobEntityRenderer<DeerEntity, EntityModel<DeerEntity>> {
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public DeerRenderer(EntityRendererFactory.Context context) {
-        super(context, new GoatEntityModel(context.getPart(EntityModelLayers.GOAT)), 0.6F);
+        // GoatEntityModel is bounded to GoatEntity; we cast it to a raw EntityModel<DeerEntity>
+        // so the renderer can be parameterized on DeerEntity. The model still renders the
+        // deer visually; it just isn't strictly type-checked at compile time.
+        super(context, (EntityModel) new GoatEntityModel(context.getPart(EntityModelLayers.GOAT)), 0.6F);
     }
 
     @Override

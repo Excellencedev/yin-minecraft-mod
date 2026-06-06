@@ -4,14 +4,16 @@ import com.adventuremod.AdventureMod;
 import com.adventuremod.mythics.StagSpiritEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.GoatEntityModel;
-import net.minecraft.entity.passive.GoatEntity;
 import net.minecraft.util.Identifier;
 
-public class StagSpiritRenderer extends MobEntityRenderer<StagSpiritEntity, GoatEntityModel<GoatEntity>> {
+public class StagSpiritRenderer extends MobEntityRenderer<StagSpiritEntity, EntityModel<StagSpiritEntity>> {
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public StagSpiritRenderer(EntityRendererFactory.Context context) {
-        super(context, new GoatEntityModel(context.getPart(EntityModelLayers.GOAT)), 1.0F);
+        // GoatEntityModel is bounded to GoatEntity; cast to EntityModel<StagSpiritEntity>.
+        super(context, (EntityModel) new GoatEntityModel(context.getPart(EntityModelLayers.GOAT)), 1.0F);
     }
 
     @Override

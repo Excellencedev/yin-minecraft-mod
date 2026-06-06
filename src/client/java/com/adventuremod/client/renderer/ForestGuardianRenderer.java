@@ -4,14 +4,16 @@ import com.adventuremod.AdventureMod;
 import com.adventuremod.bosses.ForestGuardianBossEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.RavagerEntityModel;
-import net.minecraft.entity.mob.RavagerEntity;
 import net.minecraft.util.Identifier;
 
-public class ForestGuardianRenderer extends MobEntityRenderer<ForestGuardianBossEntity, RavagerEntityModel<RavagerEntity>> {
+public class ForestGuardianRenderer extends MobEntityRenderer<ForestGuardianBossEntity, EntityModel<ForestGuardianBossEntity>> {
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public ForestGuardianRenderer(EntityRendererFactory.Context context) {
-        super(context, new RavagerEntityModel(context.getPart(EntityModelLayers.RAVAGER)), 1.2F);
+        // RavagerEntityModel is no longer generic in 1.21.1 yarn; cast to EntityModel<Boss>.
+        super(context, (EntityModel) new RavagerEntityModel(context.getPart(EntityModelLayers.RAVAGER)), 1.2F);
     }
 
     @Override
