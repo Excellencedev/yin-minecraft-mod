@@ -140,10 +140,8 @@ public class ForestGuardianBossEntity extends HostileEntity {
     }
 
     @Override
-    protected void dropXp() {
-        // Manually drop 100 XP as orbs since dropXp(int) doesn't exist in 1.21.1 yarn
-        if (this.getWorld() instanceof net.minecraft.server.world.ServerWorld sw) {
-            net.minecraft.entity.ExperienceOrbEntity.spawn(sw, this.getPos(), 100);
-        }
+    protected int getXpToDrop() {
+        // Bosses drop 100 XP on death
+        return 100;
     }
 }
