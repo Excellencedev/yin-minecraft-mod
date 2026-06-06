@@ -6,11 +6,12 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.GoatEntityModel;
+import net.minecraft.entity.passive.GoatEntity;
 import net.minecraft.util.Identifier;
 
-public class StagSpiritRenderer extends MobEntityRenderer<StagSpiritEntity, GoatEntityModel<StagSpiritEntity>> {
+public class StagSpiritRenderer extends MobEntityRenderer<StagSpiritEntity, GoatEntityModel<GoatEntity>> {
     public StagSpiritRenderer(EntityRendererFactory.Context context) {
-        super(context, new GoatEntityModel<>(context.getPart(EntityModelLayers.GOAT)), 1.0F);
+        super(context, new GoatEntityModel(context.getPart(EntityModelLayers.GOAT)), 1.0F);
     }
 
     @Override

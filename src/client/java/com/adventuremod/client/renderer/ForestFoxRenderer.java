@@ -6,11 +6,12 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.FoxEntityModel;
+import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.util.Identifier;
 
-public class ForestFoxRenderer extends MobEntityRenderer<ForestFoxEntity, FoxEntityModel<ForestFoxEntity>> {
+public class ForestFoxRenderer extends MobEntityRenderer<ForestFoxEntity, FoxEntityModel<FoxEntity>> {
     public ForestFoxRenderer(EntityRendererFactory.Context context) {
-        super(context, new FoxEntityModel<>(context.getPart(EntityModelLayers.FOX)), 0.4F);
+        super(context, new FoxEntityModel(context.getPart(EntityModelLayers.FOX)), 0.4F);
     }
 
     @Override

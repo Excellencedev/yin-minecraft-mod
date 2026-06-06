@@ -6,11 +6,12 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.GoatEntityModel;
+import net.minecraft.entity.passive.GoatEntity;
 import net.minecraft.util.Identifier;
 
-public class DeerRenderer extends MobEntityRenderer<DeerEntity, GoatEntityModel<DeerEntity>> {
+public class DeerRenderer extends MobEntityRenderer<DeerEntity, GoatEntityModel<GoatEntity>> {
     public DeerRenderer(EntityRendererFactory.Context context) {
-        super(context, new GoatEntityModel<>(context.getPart(EntityModelLayers.GOAT)), 0.6F);
+        super(context, new GoatEntityModel(context.getPart(EntityModelLayers.GOAT)), 0.6F);
     }
 
     @Override
