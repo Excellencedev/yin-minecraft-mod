@@ -77,7 +77,7 @@ public class ForestFoxEntity extends TameableEntity {
         if (this.isTamed() && this.isOwner(player)) {
             if (!this.getWorld().isClient) {
                 this.setSitting(!this.isSitting());
-                this.navigation.clearPath();
+                this.navigation.stop();
                 this.setTarget(null);
             }
             return ActionResult.SUCCESS;
@@ -89,5 +89,10 @@ public class ForestFoxEntity extends TameableEntity {
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
         return null;
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return false; // Foxes are tamed, not bred
     }
 }

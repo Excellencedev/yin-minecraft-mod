@@ -22,7 +22,7 @@ public class ModRpg {
         CommandRegistrationCallback.EVENT.register(ModRpg::registerCommands);
     }
 
-    private static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher, net.minecraft.command.CommandRegistryAccess registryAccess) {
+    private static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher, net.minecraft.command.CommandRegistryAccess registryAccess, net.minecraft.server.command.CommandManager.RegistrationEnvironment environment) {
         dispatcher.register(net.minecraft.server.command.CommandManager.literal("class")
                 .then(net.minecraft.server.command.CommandManager.argument("name", StringArgumentType.string())
                         .suggests(CLASS_SUGGESTIONS)

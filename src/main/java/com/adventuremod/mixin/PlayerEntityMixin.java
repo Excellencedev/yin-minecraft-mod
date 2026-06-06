@@ -122,7 +122,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Dashable
             double newVx = -Math.sin(yawRad) * speed;
             double newVz = Math.cos(yawRad) * speed;
             this.setVelocity(newVx, 0.15D, newVz);
-            this.velocityChanged = true;
+            this.velocityModified = true;
 
             this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
                     SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.2F, 1.2F);

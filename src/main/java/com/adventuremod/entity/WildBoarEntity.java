@@ -47,7 +47,7 @@ public class WildBoarEntity extends AnimalEntity implements Angerable {
         this.goalSelector.add(1, new MeleeAttackGoal(this, 1.25D, true));
         this.goalSelector.add(2, new EatCropsGoal(this, 1.0D));
         this.goalSelector.add(3, new TemptGoal(this, 1.1D, Ingredient.ofItems(Items.CARROT, Items.POTATO), false));
-        this.goalSelector.add(4, new BreedGoal(this, 1.0D));
+        this.goalSelector.add(4, new AnimalMateGoal(this, 1.0D));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.8D));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.add(7, new LookAroundGoal(this));
@@ -86,7 +86,7 @@ public class WildBoarEntity extends AnimalEntity implements Angerable {
         double distance = Math.sqrt(dx * dx + dz * dz);
         if (distance > 0) {
             this.setVelocity(dx / distance * 0.8D, 0.25D, dz / distance * 0.8D);
-            this.playSound(SoundEvents.ENTITY_PIG_ANGRY, 1.5F, 0.8F);
+            this.playSound(SoundEvents.ENTITY_PIG_AMBIENT, 1.5F, 0.8F);
             this.chargeCooldown = 100; // 5 second cooldown
         }
     }

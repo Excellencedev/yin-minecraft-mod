@@ -87,7 +87,7 @@ public class ForestGuardianBossEntity extends HostileEntity {
                     double dist = Math.sqrt(dx * dx + dz * dz);
                     if (dist > 0) {
                         this.setVelocity(dx / dist * 1.5D, 0.3D, dz / dist * 1.5D);
-                        this.velocityChanged = true;
+                        this.velocityModified = true;
                     }
                     attackCooldown = 60;
                 } else if (this.squaredDistanceTo(target) < 16.0D) {
@@ -133,8 +133,10 @@ public class ForestGuardianBossEntity extends HostileEntity {
     }
 
     @Override
-    protected void dropEquipment(DamageSource source, int lootingMultiplier) {
-        super.dropEquipment(source, lootingMultiplier);
+    public void onDeath(DamageSource source) {
+        super.onDeath(source);
+        // The MobEntity.dropEquipment signature changed in 1.21.1 yarn; we drop our
+        // boss loot directly here instead.
         this.dropItem(ModItems.ANTLER_GREATSWORD);
         this.dropItem(net.minecraft.item.Items.EMERALD_BLOCK, 3 + this.random.nextInt(3));
     }

@@ -12,22 +12,22 @@ import net.minecraft.util.Identifier;
 public class ModItems {
     public static final FoodComponent BOAR_MEAT_FOOD = new FoodComponent.Builder()
             .nutrition(3)
-            .saturation(1.8f)
+            .saturationModifier(1.8f)
             .build();
 
     public static final FoodComponent COOKED_BOAR_MEAT_FOOD = new FoodComponent.Builder()
             .nutrition(8)
-            .saturation(12.8f)
+            .saturationModifier(12.8f)
             .build();
 
     public static final FoodComponent VENISON_FOOD = new FoodComponent.Builder()
             .nutrition(3)
-            .saturation(1.8f)
+            .saturationModifier(1.8f)
             .build();
 
     public static final FoodComponent COOKED_VENISON_FOOD = new FoodComponent.Builder()
             .nutrition(8)
-            .saturation(12.8f)
+            .saturationModifier(12.8f)
             .build();
 
     public static final Item BOAR_TUSK = registerItem("boar_tusk", new Item(new Item.Settings()));
@@ -43,7 +43,7 @@ public class ModItems {
     public static final Item ANTLER_GREATSWORD = registerItem("antler_greatsword", new AntlerGreatswordItem(ToolMaterials.IRON, new Item.Settings().attributeModifiers(SwordItem.createAttributeModifiers(ToolMaterials.IRON, 7, -3.2f))));
     public static final Item HUNTER_BOW = registerItem("hunter_bow", new HunterBowItem(new Item.Settings().maxDamage(450)));
 
-    public static final Item WILD_BERRIES = registerItem("wild_berries", new WildBerryItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(1).saturation(0.3f).build())));
+    public static final Item WILD_BERRIES = registerItem("wild_berries", new WildBerryItem(new Item.Settings().food(new FoodComponent.Builder().nutrition(1).saturationModifier(0.3f).build())));
     public static final Item CLASS_TOME = registerItem("class_tome", new ClassTomeItem(new Item.Settings().maxCount(1)));
 
     public static final Item WILD_BOAR_SPAWN_EGG = registerItem("wild_boar_spawn_egg",

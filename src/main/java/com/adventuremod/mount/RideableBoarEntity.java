@@ -33,7 +33,7 @@ public class RideableBoarEntity extends AnimalEntity implements Saddleable {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new EscapeDangerGoal(this, 1.5D));
         this.goalSelector.add(2, new TemptGoal(this, 1.1D, Ingredient.ofItems(Items.CARROT, Items.POTATO), false));
-        this.goalSelector.add(3, new BreedGoal(this, 1.0D));
+        this.goalSelector.add(3, new AnimalMateGoal(this, 1.0D));
         this.goalSelector.add(4, new WanderAroundFarGoal(this, 0.8D));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.add(6, new LookAroundGoal(this));
@@ -87,23 +87,16 @@ public class RideableBoarEntity extends AnimalEntity implements Saddleable {
     }
 
     @Override
-    public void travel(net.minecraft.entity.MovementInput movementInput) {
-        if (this.isSaddled() && this.hasPassenger()) {
-            if (this.getFirstPassenger() instanceof PlayerEntity player) {
-                this.setYaw(player.getYaw());
-                this.prevYaw = this.getYaw();
-                this.setPitch(player.getPitch() * 0.5F);
-                this.bodyYaw = this.getYaw();
-                this.headYaw = this.bodyYaw;
-                super.travel(new net.minecraft.entity.MovementInput(
-                        player.getMovementInput().forward(),
-                        player.getMovementInput().sideways(),
-                        false, false
-                ));
-            }
-        } else {
-            super.travel(movementInput);
+    public void travel(net.minecraft.util.math.Vec3d movementInput) {
+        if (this.isSaddled() && this.hasPassengers() && this.getFirstPassenger() instanceof PlayerEntity player) {
+            // Snap the boar to face the player's yaw so steering feels natural.
+            this.setYaw(player.getYaw());
+            this.prevYaw = this.getYaw();
+            this.setPitch(player.getPitch() * 0.5F);
+            this.bodyYaw = this.getYaw();
+            this.headYaw = this.bodyYaw;
         }
+        super.travel(movementInput);
     }
 
     @Nullable

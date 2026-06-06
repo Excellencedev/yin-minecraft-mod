@@ -106,7 +106,7 @@ public class GuardVillagerEntity extends TameableEntity {
                 // Toggle follow/sit
                 if (!this.getWorld().isClient) {
                     this.setSitting(!this.isSitting());
-                    this.navigation.clearPath();
+                    this.navigation.stop();
                     this.setTarget(null);
                 }
                 return ActionResult.SUCCESS;
@@ -119,7 +119,7 @@ public class GuardVillagerEntity extends TameableEntity {
                 if (!this.getWorld().isClient) {
                     if (this.random.nextInt(3) == 0) {
                         this.setOwner(player);
-                        this.navigation.clearPath();
+                        this.navigation.stop();
                         this.setTarget(null);
                         this.getWorld().sendEntityStatus(this, (byte) 7); // Heart particles
                     } else {
@@ -137,6 +137,11 @@ public class GuardVillagerEntity extends TameableEntity {
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
         return null; // Guards do not reproduce
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return false; // Guards cannot be bred
     }
 
     @Override

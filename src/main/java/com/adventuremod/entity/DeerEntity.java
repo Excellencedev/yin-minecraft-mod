@@ -36,7 +36,7 @@ public class DeerEntity extends AnimalEntity {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new DeerFleeGoal(this, 1.4D));
         this.goalSelector.add(2, new TemptGoal(this, 1.1D, Ingredient.ofItems(Items.WHEAT, Items.APPLE), false));
-        this.goalSelector.add(3, new BreedGoal(this, 1.0D));
+        this.goalSelector.add(3, new AnimalMateGoal(this, 1.0D));
         this.goalSelector.add(4, new WanderAroundFarGoal(this, 0.8D));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.add(6, new LookAroundGoal(this));

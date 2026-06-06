@@ -43,7 +43,7 @@ public class AdventureMod implements ModInitializer {
 
         PayloadTypeRegistry.playC2S().register(DashPayload.ID, DashPayload.CODEC);
 
-        ServerPlayNetworking.registerReceiver(DashPayload.ID, (payload, context) -> {
+        ServerPlayNetworking.registerGlobalReceiver(DashPayload.ID, (payload, context) -> {
             context.server().execute(() -> {
                 if (context.player() instanceof DashablePlayer dashable) {
                     dashable.adventuremod$performDash();
