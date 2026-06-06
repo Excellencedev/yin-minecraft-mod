@@ -24,7 +24,7 @@ public class ModArmors {
                     ArmorItem.Type.CHESTPLATE, 5,
                     ArmorItem.Type.LEGGINGS, 4,
                     ArmorItem.Type.BOOTS, 2
-            ), 10, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.5F, 0.0F,
+            ), 10, RegistryEntry.of(SoundEvents.ITEM_ARMOR_EQUIP_LEATHER), 0.5F, 0.0F,
             () -> Ingredient.ofItems(ModItems.BOAR_TUSK));
 
     public static final RegistryEntry<ArmorMaterial> DEER_HIDE_MATERIAL = registerArmorMaterial("deer_hide",
@@ -33,7 +33,7 @@ public class ModArmors {
                     ArmorItem.Type.CHESTPLATE, 5,
                     ArmorItem.Type.LEGGINGS, 4,
                     ArmorItem.Type.BOOTS, 2
-            ), 12, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.5F, 0.0F,
+            ), 12, RegistryEntry.of(SoundEvents.ITEM_ARMOR_EQUIP_LEATHER), 0.5F, 0.0F,
             () -> Ingredient.ofItems(ModItems.DEER_ANTLER));
 
     public static final Item BOAR_HIDE_HELMET = registerArmorItem("boar_hide_helmet", BOAR_HIDE_MATERIAL, ArmorItem.Type.HELMET);
@@ -47,11 +47,11 @@ public class ModArmors {
     public static final Item DEER_HIDE_BOOTS = registerArmorItem("deer_hide_boots", DEER_HIDE_MATERIAL, ArmorItem.Type.BOOTS);
 
     private static RegistryEntry<ArmorMaterial> registerArmorMaterial(String name, Map<ArmorItem.Type, Integer> defense,
-                                                                      int enchantability, net.minecraft.sound.SoundEvent equipSound,
+                                                                      int enchantability, RegistryEntry<net.minecraft.sound.SoundEvent> equipSound,
                                                                       float toughness, float knockbackResistance,
                                                                       Supplier<Ingredient> repairIngredient) {
         Identifier id = Identifier.of(AdventureMod.MOD_ID, name);
-        ArmorMaterial material = new ArmorMaterial(defense, enchantability, RegistryEntry.of(equipSound), repairIngredient, List.of(), toughness, knockbackResistance);
+        ArmorMaterial material = new ArmorMaterial(defense, enchantability, equipSound, repairIngredient, List.of(), toughness, knockbackResistance);
         return RegistryEntry.of(Registry.register(Registries.ARMOR_MATERIAL, id, material));
     }
 

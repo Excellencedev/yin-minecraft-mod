@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 public record DashPayload(boolean active) implements CustomPayload {
     public static final CustomPayload.Id<DashPayload> ID = new CustomPayload.Id<>(Identifier.of("adventuremod", "dash"));
     public static final PacketCodec<PacketByteBuf, DashPayload> CODEC = PacketCodec.tuple(
-            PacketCodecs.BOOLEAN, DashPayload::active,
+            PacketCodecs.BOOL, DashPayload::active,
             DashPayload::new
     );
 
