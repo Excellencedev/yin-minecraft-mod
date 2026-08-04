@@ -15,6 +15,7 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -60,6 +61,24 @@ public class DeerEntity extends AnimalEntity {
 
     public void setHasAntlers(boolean hasAntlers) {
         this.dataTracker.set(HAS_ANTLERS, hasAntlers);
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("HasAntlers", this.hasAntlers());
+        nbt.putInt("AntlerTimer", this.antlerTimer);
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        if (nbt.contains("HasAntlers")) {
+            this.setHasAntlers(nbt.getBoolean("HasAntlers"));
+        }
+        if (nbt.contains("AntlerTimer")) {
+            this.antlerTimer = nbt.getInt("AntlerTimer");
+        }
     }
 
     @Override

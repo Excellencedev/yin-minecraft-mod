@@ -23,6 +23,7 @@ public class ModWorldGen {
 
     public static void registerWorldGen() {
         AdventureMod.LOGGER.info("Registering World Gen for " + AdventureMod.MOD_ID);
+        ModBiomes.registerBiomes();
 
         BiomeModifications.addFeature(
                 BiomeSelectors.foundInOverworld(),
