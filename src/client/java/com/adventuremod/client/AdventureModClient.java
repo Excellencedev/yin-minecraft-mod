@@ -4,6 +4,7 @@ import com.adventuremod.client.renderer.*;
 import com.adventuremod.client.renderer.model.DeerEntityModel;
 import com.adventuremod.client.renderer.model.ModEntityModelLayers;
 import com.adventuremod.entity.ModEntities;
+import com.adventuremod.movement.AirJumpPayload;
 import com.adventuremod.movement.DashPayload;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -18,6 +19,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class AdventureModClient implements ClientModInitializer {
     private static KeyBinding dashKeyBinding;
+    private static boolean wasJumpPressed;
 
     @Override
     public void onInitializeClient() {
@@ -48,6 +50,14 @@ public class AdventureModClient implements ClientModInitializer {
                 while (dashKeyBinding.wasPressed()) {
                     ClientPlayNetworking.send(new DashPayload(true));
                 }
+
+                boolean jumpPressed = client.options.jumpKey.isPressed();
+                if (jumpPressed && !wasJumpPressed && !client.player.isOnGround() && !client.player.getAbilities().flying) {
+                    ClientPlayNetworking.send(new AirJumpPayload(true));
+                }
+                wasJumpPressed = jumpPressed;
+            } else {
+                wasJumpPressed = false;
             }
         });
     }
