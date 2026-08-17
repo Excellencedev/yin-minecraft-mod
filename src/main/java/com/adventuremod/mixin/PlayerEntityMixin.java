@@ -80,13 +80,29 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Dashable
     private void onJump(CallbackInfo ci) {
         PlayerEntity player = (PlayerEntity) (Object) this;
 
-        // Wall jump: midair, colliding with a wall horizontally
-        if (!player.isOnGround() && player.horizontalCollision && this.adventuremod$wallJumpCooldown == 0) {
+        if (this.adventuremod$tryAirJump(player)) {
+            ci.cancel();
+        }
+    }
+
+    @Override
+    public void adventuremod$performAirJump() {
+        this.adventuremod$tryAirJump((PlayerEntity) (Object) this);
+    }
+
+    @Unique
+    private boolean adventuremod$tryAirJump(PlayerEntity player) {
+        if (player.isOnGround() || player.isTouchingWater() || player.isInLava() || player.getAbilities().flying) {
+            return false;
+        }
+
+        // Wall jump: midair, colliding with a wall horizontally.
+        if (player.horizontalCollision && this.adventuremod$wallJumpCooldown == 0) {
             double yawRad = Math.toRadians(player.getYaw());
             double dx = -Math.sin(yawRad) * 0.45;
             double dz = Math.cos(yawRad) * 0.45;
-            // Push the player back away from the wall
             player.setVelocity(-dx, 0.45, -dz);
+            this.velocityModified = true;
 
             player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(),
                     SoundEvents.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR, SoundCategory.PLAYERS, 0.8F, 1.2F);
@@ -95,15 +111,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Dashable
                 serverWorld.spawnParticles(ParticleTypes.CLOUD, player.getX(), player.getY(), player.getZ(), 8, 0.1, 0.1, 0.1, 0.05);
             }
             this.adventuremod$wallJumpCooldown = 10;
-            ci.cancel();
-            return;
+            return true;
         }
 
-        // Double jump: midair, no more than 1 extra jump consumed
-        if (!player.isOnGround() && !player.horizontalCollision && this.adventuremod$jumpCount < 1) {
+        // Double jump: midair, no more than 1 extra jump consumed.
+        if (!player.horizontalCollision && this.adventuremod$jumpCount < 1) {
             this.adventuremod$jumpCount++;
             Vec3d velocity = player.getVelocity();
             player.setVelocity(velocity.x, 0.42, velocity.z);
+            this.velocityModified = true;
 
             player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(),
                     SoundEvents.ENTITY_PHANTOM_FLAP, SoundCategory.PLAYERS, 1.0F, 1.5F);
@@ -111,8 +127,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Dashable
             if (player.getWorld() instanceof ServerWorld serverWorld) {
                 serverWorld.spawnParticles(ParticleTypes.CLOUD, player.getX(), player.getY() + 0.1, player.getZ(), 6, 0.2, 0.1, 0.2, 0.02);
             }
-            ci.cancel();
+            return true;
         }
+
+        return false;
     }
 
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
