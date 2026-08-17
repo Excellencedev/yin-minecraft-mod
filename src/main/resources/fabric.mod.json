@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "adventuremod",
-	"version": "${version}",
+	"version": "1.0.0",
 	"name": "Adventure & Survival Expansion",
 	"description": "Completely overhaul survival gameplay with active movement (Dashes, Wall Jumps, Double Jumps), defensive Parry combat, new custom forest animals, and hireable guard villagers.",
 	"authors": [

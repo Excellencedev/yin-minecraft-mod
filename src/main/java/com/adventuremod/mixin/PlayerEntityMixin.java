@@ -104,6 +104,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Dashable
             player.setVelocity(-dx, 0.45, -dz);
             this.velocityModified = true;
 
+            if (player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer) {
+                serverPlayer.networkHandler.sendPacket(new net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket(serverPlayer));
+            }
+
             player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(),
                     SoundEvents.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR, SoundCategory.PLAYERS, 0.8F, 1.2F);
 
@@ -120,6 +124,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Dashable
             Vec3d velocity = player.getVelocity();
             player.setVelocity(velocity.x, 0.42, velocity.z);
             this.velocityModified = true;
+
+            if (player instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer) {
+                serverPlayer.networkHandler.sendPacket(new net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket(serverPlayer));
+            }
 
             player.getWorld().playSound(null, player.getX(), player.getY(), player.getZ(),
                     SoundEvents.ENTITY_PHANTOM_FLAP, SoundCategory.PLAYERS, 1.0F, 1.5F);
@@ -156,6 +164,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements Dashable
             double newVz = Math.cos(yawRad) * speed;
             this.setVelocity(newVx, 0.15D, newVz);
             this.velocityModified = true;
+
+            if ((Object) this instanceof net.minecraft.server.network.ServerPlayerEntity serverPlayer) {
+                serverPlayer.networkHandler.sendPacket(new net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket(serverPlayer));
+            }
 
             this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
                     SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.2F, 1.2F);
