@@ -30,6 +30,39 @@ public class ModRpg {
                 )
                 .executes(ModRpg::showClass)
         );
+
+        dispatcher.register(net.minecraft.server.command.CommandManager.literal("adventuremod")
+                .then(net.minecraft.server.command.CommandManager.literal("status")
+                        .executes(ModRpg::showStatus)
+                )
+                .then(net.minecraft.server.command.CommandManager.literal("help")
+                        .executes(ModRpg::showHelp)
+                )
+                .executes(ModRpg::showHelp)
+        );
+    }
+
+    private static int showStatus(CommandContext<ServerCommandSource> context) {
+        ServerCommandSource source = context.getSource();
+        if (source.getPlayer() instanceof PlayerProgressionHolder holder) {
+            var progression = holder.adventuremod$getProgression();
+            var skills = progression.skills;
+            var thirst = progression.thirst;
+            source.sendFeedback(() -> Text.literal("§6[AdventureMod] Class: §f" + progression.playerClass.getName()), false);
+            source.sendFeedback(() -> Text.literal("§6[AdventureMod] Thirst: §b" + thirst.getThirstLevel() + "/20 §7(saturation " + String.format("%.1f", thirst.getThirstSaturation()) + ")"), false);
+            source.sendFeedback(() -> Text.literal("§6[AdventureMod] Skills: §aHunting " + skills.getHuntingLevel() + "§7, §cCombat " + skills.getCombatLevel() + "§7, §eFarming " + skills.getFarmingLevel()), false);
+            source.sendFeedback(() -> Text.literal("§6[AdventureMod] Movement: §fpress jump again in midair for double jump; press Left Alt for dash."), false);
+            return 1;
+        }
+        return 0;
+    }
+
+    private static int showHelp(CommandContext<ServerCommandSource> context) {
+        ServerCommandSource source = context.getSource();
+        source.sendFeedback(() -> Text.literal("§6AdventureMod commands:"), false);
+        source.sendFeedback(() -> Text.literal("§e/adventuremod status §7- show class, thirst, skills, and controls"), false);
+        source.sendFeedback(() -> Text.literal("§e/class <hunter|warrior|scout|none> §7- choose your RPG class"), false);
+        return 1;
     }
 
     private static int setClass(CommandContext<ServerCommandSource> context) {
