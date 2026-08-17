@@ -33,8 +33,8 @@ public class DeerEntityModel extends PigEntityModel<DeerEntity> {
         // PigEntityModel assigns its own fields (head/body/legs) from the loaded
         // ModelPart tree. We declared an extra "antlers" child under "head" in
         // getTexturedModelData so it inherits the head's pivot/rotation; here we
-        // just grab a handle to it for animation.
-        this.antlers = root.getChild("antlers");
+        // grab it from the head part for animation.
+        this.antlers = root.getChild("head").getChild("antlers");
     }
 
     /**
